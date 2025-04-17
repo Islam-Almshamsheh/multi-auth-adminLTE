@@ -1,26 +1,9 @@
 @extends('backend.layouts.app')
-
+@section('title') Edit User @endsection
 @section('content')
-<div class="content-wrapper">
-  <!-- Content Header -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">Edit User</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">User Info</h3>
-        </div>
-
+      @section('content-header') Edit User @endsection
+      @section('card-title') User Info @endsection
+      @section('main-content')
         <form method="POST" action="{{ route('users.update', $user->id) }}">
           @csrf
           @method('PUT')
@@ -89,9 +72,6 @@
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Update</button>
           </div>
-        </form>
-      </div>
-    </div>
-  </section>
-</div>
+        </form>        
+      @endsection
 @endsection

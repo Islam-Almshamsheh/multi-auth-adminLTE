@@ -21,6 +21,7 @@ class UserController extends Controller
     
     public function update($userId)
     {
+        //1- get the user data
         $validated = request()->validate([
             'name'=> 'required|string|max:255',
             'email'=>'required|string|max:255|unique:users,email,'.$userId,
@@ -30,11 +31,7 @@ class UserController extends Controller
             'password'=> 'nullable|string|min:8|confirmed',// <--- this checks password_confirmation automatically
             'role'=> 'required|in:admin,user',
         ]);
-        //1- get the user data
-        $name = request()->name;
-        $email = request()->email;
-        $password = request()->password;
-        $role = request()->role;
+        
         // Only update password if it's provided
         if (!empty($validated['password'])) {
             $validated['password'] = bcrypt($validated['password']);
@@ -72,23 +69,20 @@ class UserController extends Controller
     public function store()
     {
         request()->validate([
-            "name" => "required|string|max:255",
-            "email" => "required|string|max:255|unique:users,email,",
+            "name" => "required|string|min:3|max:255",
+            "email" => "required|string|email:rfc,dns|max:255|unique:users,email,",
             "password" => "required|min:8|confirmed ",
             "role" => "required|in:admin,user",
         ]);
 
-        $userData = request()->all();
-        $name = request()->name;
-        $email = request()->email;
-        $password = bcrypt(request()->password); // hash the password
-        $role = request()->role;
-
-        User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => $password,
-            'role' => $role,
+        $hashedPassword = bcrypt(request()->password);
+        //it was User::create
+        User::firstOrCreate(['email' =>request()->email],
+        [
+            'name' => request()->name,
+            'email' => request()->email,
+            'password' => $hashedPassword,
+            'role' => request()->role,
         ]);
 
         return to_route("users.index")->with("success", "User created successfully");

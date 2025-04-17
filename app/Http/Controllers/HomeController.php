@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -13,16 +14,17 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth'); //home is public
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        return view('backend.layouts.dashboard');
+        $posts = Post::with('tags', 'user', 'category')->latest()->take(6)->get();
+        return view('pages.home', compact('posts'));
+    }
+    
+    public function show(Post $post)
+    {
+      return view('pages.show',compact('post'));
     }
 }

@@ -75,6 +75,23 @@
           </div>
           <!-- /.col -->
         </div>
+        
+        <!-- Post Content Card -->
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+            <div class="card shadow rounded">
+                <div class="card-header bg-secondary text-white">
+                Post Content
+                </div>
+                <div class="card-body">
+                <p style="white-space: pre-wrap;">{{ $post->post }}</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
         <!-- New Row for the Image Card -->
         <div class="row mt-4">
           <div class="col-12 col-md-6 offset-md-3">
@@ -92,7 +109,7 @@
           </div>
         </div>
         <div class="card-footer">
-            <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">back to posts</a>
+            <a href="{{ route('user.posts.index') }}" class="btn btn-primary">back to posts</a>
         </div>
     </section>
     @endsection {{-- end main-content --}}

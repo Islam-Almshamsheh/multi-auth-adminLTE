@@ -1,23 +1,9 @@
 @extends('backend.layouts.app')
-@section('title')
-Index
-@endsection
+@section('title') Index @endsection
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">All Users</h3>
-              </div>
-              <!-- /.card-header -->
+            @section('content-header') All Users @endsection
+            @section('card-title') Users @endsection
+            @section('main-content')
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
@@ -65,20 +51,7 @@ Index
                   </tfoot>
                 </table>
               </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    
-    <!-- /.content -->
-  </div>
-<!-- /.content-wrapper -->
+            @endsection
 @endsection
 @section("script")
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

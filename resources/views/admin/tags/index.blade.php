@@ -1,60 +1,42 @@
 @extends('backend.layouts.app')
 @section('title') Index @endsection
 @section('content')
-@section('content-header') All Posts @endsection
-@section('card-title') Posts @endsection
+@section('content-header') All Tags @endsection
+@section('card-title') Tags @endsection
 @section('main-content')
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>No</th>
-                    <th>Title</th>
-                    <th>Created by</th>
-                    <th>Category</th>
-                    <th>Related Tags</th>
+                    <th>Tag ID</th>
+                    <th>Name</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($posts as $post)
+                    @foreach($tags as $tag)
                   <tr>
-                    <td>{{$post->id}}</td>
-                    <td>{{$post->title}}</td>
-                    <td>{{$post->user->email ?? 'No User'}}</td><!-- name is not unique -->
-                    <td>{{$post->category->name ?? 'No Category'}}</td>
+                    <td>{{$tag->id}}</td>
+                    <td>{{$tag->name}}</td>
                     <td>
-                        @if ($post->tags->isNotEmpty())
-                          {{ $post->tags->pluck('name')->join(', ') }}
-                        @else
-                          No Tags
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route("admin.posts.show",$post) }}" class="btn btn-info">Show</a>
-
-                        <a href="{{ route("admin.posts.edit",$post) }}" class="btn btn-info">Edit</a>
-                        
-                        <form id="delete-form-{{ $post->id }}" style="display: inline;" method="POST" action="{{ route('admin.posts.destroy', $post->id) }}">
+                        <a href="{{ route("tags.edit",$tag) }}" class="btn btn-info">Edit</a>
+                        <form id="delete-form-{{$tag->id}}" style="display: inline;" method="POST" action="{{ route('tags.destroy', $tag->id) }}">
                           @csrf
                           @method('DELETE')
-                          <button type="button" class="btn btn-danger" onclick="confirmation(event, {{ $post->id }})">Delete</button>
+                          <button type="button" class="btn btn-danger" onclick="confirmation(event, {{$tag->id}})">Delete</button>
                         </form>
                     </td>
                   
-                  </tr>
+                    </tr>
                    @endforeach
                     
                     
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>No</th>
-                    <th>Title</th>
-                    <th>Created by</th>
-                    <th>Category</th>
-                    <th>Related Tags</th>
+                    <th>Tag ID</th>
+                    <th>Name</th>
                     <th>Action</th>
                   </tr>
                   </tr>

@@ -1,10 +1,10 @@
 @extends('backend.layouts.app')
-@section('title') Edit Category @endsection
+@section('title') Edit Tag @endsection
 @section('content')
-@section('content-header') Edit Category @endsection
-@section('card-title') Category Info @endsection
+@section('content-header') Edit Tag @endsection
+@section('card-title') Tag Info @endsection
 @section('main-content')
-        <form method="POST" action="{{ route('categories.update', $category->id) }}">
+        <form method="POST" action="{{ route('tags.update', $tag->id) }}">
           @csrf
           @method('PUT')
           <div class="card-body">
@@ -15,7 +15,7 @@
                      class="form-control @error('name') is-invalid @enderror"
                      id="name"
                      name="name"
-                     value="{{ old('name', $category->name) }}">
+                     value="{{ old('name', $tag->name) }}">
               @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror

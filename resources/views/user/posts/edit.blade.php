@@ -1,10 +1,10 @@
 @extends('backend.layouts.app')
 @section('title') Edit Post @endsection
 @section('content')
-@section('content-header') Edit Post @endsection
-@section('card-title') Post Info @endsection
+@section('content-header') Edit Your Post @endsection
+@section('card-title') Your Post Info @endsection
 @section('main-content')
-        <form method="POST" action="{{ route('admin.posts.update', $post) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('user.posts.update',$post) }}" enctype="multipart/form-data">
           @csrf
           @method('PUT')
           <div class="card-body">
@@ -24,12 +24,12 @@
             <!-- Post Field -->
             <div class="form-group">
               <label for="post">Post</label>
-              <input type="textarea"
+              <textarea type=""
                      class="form-control @error('post') is-invalid @enderror"
                      id="post"
                      name="post"
                      rows="20"
-                     value="{{ old('post', $post->post) }}">
+                     >{{ old('post', $post->post) }}</textarea>
               @error('post')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -50,21 +50,29 @@
               @enderror
             </div>
             
-            <!-- Tag Selection -->
             <div class="form-group">
-              <label class="required" for="tags">Tags</label>
-              <input
-               type="text"
-               name="tags"
-               id="tags"
-               class="form-control @error('tags') is-invalid @enderror"
-               value="{{ $post->tags->isNotEmpty() ? $post->tags->pluck('name')->join(', ') : '' }}"
-              >
-              @error('tags')
-                  <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-              <span class="help-block">Separate tags with commas</span>
+                <label class="required" for="tags">Tags</label>
+                <div class="form-check">
+                    @foreach($tags as $tag)
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input @error('tags') is-invalid @enderror"
+                                id="tag-{{ $tag->id }}"
+                                name="tags[]"
+                                value="{{ $tag->id }}"
+                                {{ in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray())) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="tag-{{ $tag->id }}">
+                                {{ $tag->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+                @error('tags')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
+
 
 
             <!-- image Field -->

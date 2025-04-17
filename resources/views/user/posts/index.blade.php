@@ -2,7 +2,7 @@
 @section('title') Index @endsection
 @section('content')
 @section('content-header') All Posts @endsection
-@section('card-title') Posts @endsection
+@section('card-title') {{auth()->user()->name }}-Posts @endsection
 @section('main-content')
               <!-- /.card-header -->
               <div class="card-body">
@@ -11,18 +11,16 @@
                   <tr>
                     <th>No</th>
                     <th>Title</th>
-                    <th>Created by</th>
                     <th>Category</th>
                     <th>Related Tags</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($posts as $post)
+                    @foreach($userPosts as $post)
                   <tr>
                     <td>{{$post->id}}</td>
                     <td>{{$post->title}}</td>
-                    <td>{{$post->user->email ?? 'No User'}}</td><!-- name is not unique -->
                     <td>{{$post->category->name ?? 'No Category'}}</td>
                     <td>
                         @if ($post->tags->isNotEmpty())
@@ -32,11 +30,11 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route("admin.posts.show",$post) }}" class="btn btn-info">Show</a>
+                        <a href="{{ route("user.posts.show",$post) }}" class="btn btn-info">Show</a>
 
-                        <a href="{{ route("admin.posts.edit",$post) }}" class="btn btn-info">Edit</a>
+                        <a href="{{ route("user.posts.edit",$post) }}" class="btn btn-info">Edit</a>
                         
-                        <form id="delete-form-{{ $post->id }}" style="display: inline;" method="POST" action="{{ route('admin.posts.destroy', $post->id) }}">
+                        <form id="delete-form-{{ $post->id }}" style="display: inline;" method="POST" action="{{ route('user.posts.destroy', $post->id) }}">
                           @csrf
                           @method('DELETE')
                           <button type="button" class="btn btn-danger" onclick="confirmation(event, {{ $post->id }})">Delete</button>
@@ -52,7 +50,6 @@
                   <tr>
                     <th>No</th>
                     <th>Title</th>
-                    <th>Created by</th>
                     <th>Category</th>
                     <th>Related Tags</th>
                     <th>Action</th>

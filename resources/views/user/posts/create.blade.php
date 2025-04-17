@@ -8,7 +8,7 @@
 @section('main-content')
 <section class="content">
   <div class="container-fluid">
-    <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('user.posts.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="card card-primary">
         <div class="card-header">
@@ -56,29 +56,40 @@
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>
+
           <div class="form-group">
-              <label class="required" for="tags">Tags</label>
-              <input
-               type="text"
-               name="tags"
-               id="tags"
-               class="form-control @error('tags') is-invalid @enderror"
-               value="{{ old('tags') }}"
-              >
-              @error('tags')
-                  <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-              <span class="help-block">Separate tags with commas</span>
+          <label class="required" for="tags">Tags</label>
+          <div class="form-check">
+          @foreach($tags as $tag)
+              <div class="form-check">
+                  <input
+                      type="checkbox"
+                      class="form-check-input @error('tags') is-invalid @enderror"
+                      id="tag-{{ $tag->id }}"
+                      name="tags[]"
+                      value="{{ $tag->id }}"
+                      {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                  <label class="form-check-label" for="tag-{{ $tag->id }}">
+                      {{ $tag->name }}
+                  </label>
+              </div>
+          @endforeach
           </div>
+          @error('tags')
+              <div class="invalid-feedback">{{ $message }}</div>
+          @enderror
+        </div>
+
+
+
+
 
           <div class="form-group">
             <label for="image">Upload Image</label>
             <input type="file"
               class="form-control @error('image') is-invalid @enderror"
               id="image"
-              name="image"
-              value="{{ old('image') }}"
-              >
+              name="image">
             @error('image')
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror

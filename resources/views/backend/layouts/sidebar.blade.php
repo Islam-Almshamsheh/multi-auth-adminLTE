@@ -44,13 +44,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('home')}}" class="nav-link active">
+                <a href="{{route(Str::lower(auth()->user()->role).'.dashboard')}}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard</p>
+                  <p>Profile</p>
                 </a>
               </li>
             </ul>
           </li>
+          
           <!-- admin will access all menus user will only access Dashboard and logout -->
           @if(auth()->user()->role == 'admin')
           <li class="nav-item menu-open">
@@ -63,7 +64,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('users.index')}}" class="nav-link active">
+                <a href="{{route('users.index')}}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All users</p>
                 </a>
@@ -71,13 +72,14 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route("users.create") }}" class="nav-link active">
+                <a href="{{ route("users.create") }}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>create user</p>
                 </a>
               </li>
             </ul>
           </li>
+
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -88,7 +90,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link active">
+                <a href="{{ route('categories.index') }}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All categories</p>
                 </a>
@@ -96,17 +98,9 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link active">
+                <a href="{{ route('categories.create') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>edit category</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>create categories</p>
+                  <p>create category</p>
                 </a>
               </li>
             </ul>
@@ -120,62 +114,80 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link active">
+                <a href="{{ route( 'admin.posts.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All posts</p>
                 </a>
               </li>
             </ul>
+
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>edit post</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link active">
+                <a href="{{route('admin.posts.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>create post</p>
                 </a>
               </li>
             </ul>
           </li>
-
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
+                Tags Management
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
-          
-          <li class="nav-header">LABELS</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-danger"></i>
-              <p class="text">Important</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-warning"></i>
-              <p>Warning</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
-              <p>Informational</p>
-            </a>
-          </li>
+            
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route( 'tags.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All tags</p>
+                </a>
+              </li>
+            </ul>
 
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('tags.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>create tag</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @elseif(auth()->user()->role == 'user')
+           <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                My Posts Management
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route( 'user.posts.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All posts</p>
+                </a>
+              </li>
+            </ul>
+
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('user.posts.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>create new post</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           @endif
           <li class="nav-item">
           <a class="dropdown-item" href="{{ route('logout') }}"

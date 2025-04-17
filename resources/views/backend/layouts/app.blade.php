@@ -33,6 +33,22 @@
   @include('backend.layouts.sidebar')
 
   <!-- Content Wrapper. Contains page content -->
+  @include('backend.layouts.content-wrapper')
+  
+  <!-- Success Message Toast -->
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+    @if(session('success'))
+    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+    @endif
+  </div>
+
   @yield('content')
   <!-- /.content-wrapper -->
 
@@ -44,10 +60,10 @@
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>BlogsWebsite </strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      <b>location</b> Amman
     </div>
   </footer>
 </div>
@@ -106,6 +122,37 @@
       "responsive": true,
     });
   });
+</script>
+<script>
+  // Initialize toast notifications
+  document.addEventListener('DOMContentLoaded', function() {
+    const toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    const toastList = toastElList.map(function(toastEl) {
+      return new bootstrap.Toast(toastEl, {
+        animation: true,
+        autohide: true,
+        delay: 5000
+      }).show()
+    })
+  })
+
+  // Show success message using SweetAlert2
+  @if(session('success'))
+  Swal.fire({
+    icon: 'success',
+    title: 'Success!',
+    text: '{{ session('success') }}',
+    timer: 5000,
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  @endif
 </script>
 </body>
 </html>

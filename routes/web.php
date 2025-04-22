@@ -6,7 +6,7 @@ use App\Http\Controllers\User\PostController as UserPostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
